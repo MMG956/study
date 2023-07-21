@@ -1,1 +1,16 @@
+一、测试平台数据存储架构
+MySql--ES--HBase
+数据量少的数据存放进MySql：数据集表等等...
 
+大数据量的数据放入HBase中:数据、标注数据...
+
+ES 充当 HBase的二级索引。  为什么引入es： 因为HBase只支持主键查询，或者说主键查询最快，条件查询就是一坨屎。
+
+HBase中的表: data_{type} 表
+css中的表  ： css_data_{type} 以及 data_set_rel
+              data_set_rel表的设计：id， setId， dataId
+
+当没有条件查询的时候，比如说我需要知道一个数据集里的数据时：先通过数据集id 查询 css 中的 data_set_rel 表，查出 dataId，再通过 dataId  去 HBase中查询返回数据。
+当有条件查询的时候，去 css 的 css_data_{type} 表中进行 条件查询，返回 dataId，再去HBase中查询。
+
+分页怎么做的：假设分页是10条，会在里面查出11条数据，把前10条数据展示以及返回一个nextStartId。

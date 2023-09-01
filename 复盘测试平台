@@ -14,3 +14,6 @@ css中的表  ： css_data_{type} 以及 data_set_rel
 当有条件查询的时候，去 css 的 css_data_{type} 表中进行 条件查询，返回 dataId，再去HBase中查询。
 
 分页怎么做的：假设分页是10条，会在里面查出11条数据，把前10条数据展示以及返回一个nextStartId。
+
+
+数据存放在mysql、hbase、es中，数据一致性的问题怎么解决的
